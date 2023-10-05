@@ -3,20 +3,91 @@ import {
   StyleSheet,
   Text,
   View,
-  TextInput,
-  Image,
   ImageBackground,
   ScrollView,
 } from "react-native";
 import { useFonts } from "expo-font";
 import * as React from "react";
+import HomePage from "./HomePage";
 
 export default function App() {
   const [loaded] = useFonts({
     "challenger-font": require("./assets/fonts/ChallengerROUGH.ttf"),
   });
+  const [tapTrue, setTapTrue] = React.useState(false); // Initialize tapTrue here
+  const [gifOpacity, setGifOpacity] = React.useState(0.7);
+  const [textOpacity, setTextOpacity] = React.useState(1);
+  const [proceedPosition, setProceedPosition] = React.useState(200);
+
+  React.useEffect(() => {
+    if (textOpacity > 0 && proceedPosition > -300) {
+      const interval = setInterval(() => {
+        setProceedPosition(proceedPosition - 0.5);
+      }, 1); // Update opacity every 100 milliseconds
+
+      return () => {
+        clearInterval(interval); // Clear the interval when component unmounts
+      };
+    }
+  }, [textOpacity, proceedPosition]);
+
+  React.useEffect(() => {
+    if (!tapTrue && proceedPosition === -300) {
+      setProceedPosition(200);
+    }
+  }, [tapTrue, proceedPosition]);
+
+  React.useEffect(() => {
+    if (tapTrue && gifOpacity > 0) {
+      const interval = setInterval(() => {
+        setGifOpacity(gifOpacity - 0.1);
+      }, 100); // Update opacity every 100 milliseconds
+
+      return () => {
+        clearInterval(interval); // Clear the interval when component unmounts
+      };
+    }
+  }, [tapTrue, gifOpacity]);
+
+  React.useEffect(() => {
+    if (tapTrue && textOpacity > 0) {
+      const interval = setInterval(() => {
+        setTextOpacity(textOpacity - 0.1);
+      }, 10); // Update opacity every 100 milliseconds
+
+      return () => {
+        clearInterval(interval); // Clear the interval when component unmounts
+      };
+    }
+  }, [tapTrue, textOpacity]);
+
   if (!loaded) {
     return null;
+  }
+
+  if (tapTrue) {
+    return (
+      <View style={styles.container}>
+        <ImageBackground
+          source={require("./assets/Clouds2.gif")}
+          style={[styles.cloudgif, { opacity: gifOpacity }]}
+        />
+        <ScrollView>
+          <Text style={styles.header}>Test</Text>
+          <Text
+            style={[
+              styles.input,
+              { right: proceedPosition },
+              { opacity: textOpacity },
+            ]}
+            onPress={() => setTapTrue(true)}
+          >
+            Tap to Proceed
+          </Text>
+          <StatusBar style="auto" />
+        </ScrollView>
+      </View>
+    );
   }
 
   return (
@@ -26,11 +97,17 @@ export default function App() {
         style={styles.cloudgif}
       />
       <ScrollView>
-        <Text style={styles.header}>WACKY WEATHER</Text>
-
+        <Text style={styles.header} onPress={() => setTapTrue(true)}>
+          WACKY WEATHER
+        </Text>
+        <Text
+          style={[styles.input, { right: proceedPosition }]}
+          onPress={() => setTapTrue(true)}
+        >
+          Tap to Proceed
+        </Text>
         <StatusBar style="auto" />
       </ScrollView>
-      <TextInput style={styles.input} placeholder="Enter City Name" />
     </View>
   );
 }
@@ -63,7 +140,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     position: "relative",
-    top: 25,
+    bottom: "50%",
   },
   cloudgif: {
     flex: 1,
@@ -72,9 +149,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     position: "relative",
-    bottom: 200,
+    bottom: "35%",
     right: 145,
-
     opacity: 0.7,
   },
 });
