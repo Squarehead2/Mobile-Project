@@ -1,16 +1,33 @@
 // Settings.js
-import React from 'react';
+import React from "react";
 import { useFonts } from "expo-font";
-import { AntDesign } from '@expo/vector-icons'; 
-import { StyleSheet, View, Text, TextInput, Switch } from 'react-native';
+import { AntDesign } from "@expo/vector-icons";
+import { StyleSheet, View, Text, TextInput, Switch } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 const Settings = () => {
+  const navigation = useNavigation();
   const [loaded] = useFonts({
     "challenger-font": require("./assets/fonts/ChallengerROUGH.ttf"),
   });
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Settings</Text>
+      <View style={styles.headerContainer}>
+        <View style={styles.settingItem}>
+          <AntDesign
+            name="arrowleft"
+            size={24}
+            color="black"
+            style={styles.settingBack}
+            onPress={() => navigation.goBack()}
+          />
+          <Text style={styles.settingBack} onPress={() => navigation.goBack()}>
+            Back
+          </Text>
+        </View>
+        <Text style={styles.header}>Settings</Text>
+      </View>
+      <View />
 
       {/* Add your settings options here */}
       <View style={styles.settingItem}>
@@ -42,7 +59,6 @@ const Settings = () => {
         <Text style={styles.settingLabel}>FAQ</Text>
         <AntDesign name="arrowright" size={24} color="black" />
       </View>
-
     </View>
   );
 };
@@ -60,15 +76,30 @@ const styles = StyleSheet.create({
     fontSize: 35, // Reduce the font size
     fontFamily: "challenger-font",
     paddingBottom: 50, // Adjust paddingBottom for the footer
+    alignSelf: "center",
+  },
+  headerContainer: {
+    flexDirection: "row",
+    paddingBottom: 50, // Adjust paddingBottom for the footer
+    alignSelf: "baseline",
   },
   settingItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginBottom: 40,
+    fontFamily: "challenger-font",
+  },
+  settingBack: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 40,
+    fontFamily: "challenger-font",
+    alignSelf: "baseline",
   },
   settingLabel: {
     fontSize: 20,
     marginRight: 10,
+    fontFamily: "challenger-font",
   },
   input: {
     flex: 1,
