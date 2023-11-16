@@ -17,6 +17,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomePage from "./HomePage";
 import Setting from "./Setting";
+import Preferences from "./Preferences";
+import AppInfo from "./AppInfo";
 
 const Stack = createNativeStackNavigator();
 
@@ -30,6 +32,8 @@ export default function App() {
       >
         <Stack.Screen name="HomePage" component={HomePage} />
         <Stack.Screen name="Setting" component={Setting} />
+        <Stack.Screen name="Preferences" component={Preferences} />
+        <Stack.Screen name="AppInfo" component={AppInfo} />
       </Stack.Navigator>
     </NavigationContainer>
   );

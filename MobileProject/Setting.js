@@ -4,12 +4,22 @@ import { useFonts } from "expo-font";
 import { AntDesign } from "@expo/vector-icons";
 import { StyleSheet, View, Text, TextInput, Switch } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import Preferences from "./Preferences";
+import AppInfo from "./AppInfo";
+
 
 const Settings = () => {
   const navigation = useNavigation();
+  const navigateToScreen = (screenName) => {
+    navigation.navigate(screenName);
+  };
   const [loaded] = useFonts({
     "challenger-font": require("./assets/fonts/ChallengerROUGH.ttf"),
   });
+
+  
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
@@ -41,24 +51,15 @@ const Settings = () => {
       </View>
 
       <View style={styles.settingItem}>
-        <Text style={styles.settingLabel}>Preferences</Text>
-        <AntDesign name="arrowright" size={24} color="black" />
+        <Text style={styles.settingLabel} onPress={() => navigateToScreen("Preferences")}>Preferences</Text>
+        <AntDesign name="arrowright" size={24} color="black" onPress={() => navigateToScreen("Preferences")} />
       </View>
 
       <View style={styles.settingItem}>
-        <Text style={styles.settingLabel}>Help</Text>
-        <AntDesign name="arrowright" size={24} color="black" />
+        <Text style={styles.settingLabel} onPress={() => navigateToScreen("AppInfo")}>App Info</Text>
+        <AntDesign name="arrowright" size={24} color="black" onPress={() => navigateToScreen("AppInfo")} />
       </View>
 
-      <View style={styles.settingItem}>
-        <Text style={styles.settingLabel}>App Info</Text>
-        <AntDesign name="arrowright" size={24} color="black" />
-      </View>
-
-      <View style={styles.settingItem}>
-        <Text style={styles.settingLabel}>FAQ</Text>
-        <AntDesign name="arrowright" size={24} color="black" />
-      </View>
     </View>
   );
 };
