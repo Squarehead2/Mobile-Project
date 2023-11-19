@@ -1,0 +1,46 @@
+{
+  "morningJokes": [
+    {
+      "joke": "Why did the scarecrow win an award in the morning? Because he was outstanding in his field!"
+    },
+    {
+      "joke": "How does the sun say good morning? It rises and shines!"
+    },
+    {
+      "joke": "Why don't we tell secrets in the morning? Because they tend to spread like morning dew!"
+    },
+    {
+      "joke": "What do you call a grumpy coffee? A mean-uccino!"
+    },
+    {
+      "joke": "Why did the cereal blush in the morning? It saw the milk without its lid on!"
+    },
+    {
+      "joke": "How do you make a tissue dance in the morning? Put a little boogie in it!"
+    },
+    {
+      "joke": "Why was the math book sad in the morning? Because it had too many problems!"
+    },
+    {
+      "joke": "What did the blanket say to the bed in the morning? 'I've got you covered!'"
+    },
+    {
+      "joke": "How does a barber greet his customers in the morning? With a hair-raising 'Good morning!'"
+    },
+    {
+      "joke": "Why did the rooster cross the road in the morning? To wake up the people on the other side!"
+    }
+  ],
+  "morningDescriptions": [
+    "Dawn: Sun's sneak peek.",
+    "Coffee, stat! Zombie mode.",
+    "Snooze wars: never-ending.",
+    "Yawn marathon champion.",
+    "Bed's magnetic force.",
+    "Pajamas cling stubbornly.",
+    "Toast or chaos?",
+    "Eyes wide, brain... not.",
+    "Alarm: Mood destroyer.",
+    "Sunrise: bird opera."
+  ]
+}

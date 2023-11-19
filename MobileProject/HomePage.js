@@ -1,32 +1,23 @@
+"use client";
 import { StatusBar } from "expo-status-bar";
 import {
-  StyleSheet,
   Text,
   View,
   ImageBackground,
   ScrollView,
-  Image,
+  Animated, // Import Animated
 } from "react-native";
+import { useState } from "react";
 import { useFonts } from "expo-font";
 import * as React from "react";
 import { SimpleLineIcons } from "@expo/vector-icons";
-import { AntDesign } from "@expo/vector-icons";
-import { TextInput } from "react-native-web";
-import Settings from "./Setting";
+
 import { useNavigation } from "@react-navigation/native";
+import TimeOfDay from "./utils/TimeOfDay";
+import styles from "./assets/StyleSheet";
 
-function TimeOfDay() {
-  var today = new Date();
-  var time = today.getHours();
-  if (time < 12) {
-    return "bad morning";
-  } else if (time < 18) {
-    return "terrible afternoon";
-  } else {
-    return "gloomy night";
-  }
-}
-
+// Get the current time and date
+// Get the current time and date
 function DateTime() {
   var today = new Date();
 
@@ -43,31 +34,14 @@ function DateDay() {
 
   return time;
 }
-var days = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-];
 
-var months = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
+// Import the JSON files
+var daysdata = require("./assets/Days.json");
+var monthsdata = require("./assets/Months.json");
+var days = daysdata.days;
+var months = monthsdata.months;
 
+// Get the current day and month
 GetMonthName = function () {
   var today = new Date();
   return months[today.getMonth()];
@@ -79,6 +53,8 @@ GetDayName = function () {
 
 // Main App
 export default function HomePage() {
+  const [slideAnim] = useState(new Animated.Value(0)); // Initial value for slide animation
+
   const navigation = useNavigation();
   const [loaded] = useFonts({
     "challenger-font": require("./assets/fonts/ChallengerROUGH.ttf"),
@@ -202,12 +178,7 @@ export default function HomePage() {
           <View style={styles.navbox}>
             {/* <View style={styles.navFlex}> */}
             <Text style={styles.time}>{currentTime}</Text>
-            <AntDesign
-              name="sharealt"
-              style={styles.share}
-              size={24}
-              color="black"
-            />
+
             <SimpleLineIcons
               name="settings"
               style={styles.settings}
@@ -222,8 +193,17 @@ export default function HomePage() {
             /> */}
           </View>
 
-          <ScrollView style={[{ paddingLeft: "55%" }, { top: "2%" }]}>
-            <Text style={styles.defaulttext}>{TimeOfDay()}</Text>
+          <ScrollView
+            style={[
+              { position: "absolute" },
+              { paddingLeft: "55%" },
+              { top: "2%" },
+              {
+                top: "33%",
+              },
+            ]}
+          >
+            <TimeOfDay style={styles.defaulttext} />
             <Text style={styles.defaulttext}>{currentDay}</Text>
             <Text style={styles.defaulttext}>{currentMonth}</Text>
             <Text style={[styles.defaulttext, { fontSize: 25 }]}>
@@ -232,6 +212,7 @@ export default function HomePage() {
 
             <StatusBar style="auto" />
           </ScrollView>
+
           <View style={styles.cityBox}>
             <Text style={styles.citySelectText}>More Details</Text>
           </View>
@@ -269,140 +250,3 @@ export default function HomePage() {
     </View>
   );
 }
-
-// Styles
-const styles = StyleSheet.create({
-  container: {
-    flex: 3,
-    width: "100%",
-    height: "100%",
-    backgroundColor: "#42adf5",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  container2: {
-    flex: 2,
-    flexDirection: "row",
-    width: "100%",
-    height: "100%",
-    backgroundColor: "#42adf5",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-  header: {
-    flex: 1,
-    fontSize: 55,
-    paddingTop: 70,
-    textAlign: "center",
-    fontFamily: "challenger-font",
-    alignItems: "center",
-    justifyContent: "center",
-    position: "relative",
-    bottom: 75,
-  },
-  input: {
-    flex: 1,
-    fontSize: 25,
-    paddingTop: 70,
-    fontFamily: "challenger-font",
-    alignItems: "center",
-    justifyContent: "center",
-    position: "relative",
-    bottom: "50%",
-  },
-  cloudgif: {
-    flex: 1,
-    width: "150%",
-    height: "550%",
-    alignItems: "center",
-    justifyContent: "center",
-    position: "relative",
-    bottom: "35%",
-    right: 145,
-    opacity: 0.7,
-  },
-  time: {
-    fontSize: 25,
-    top: "65%",
-    paddingLeft: 25,
-    fontFamily: "challenger-font",
-    position: "relative",
-    alignSelf: "baseline",
-  },
-  defaulttext: {
-    flex: 1,
-    width: "55%",
-    height: "100%",
-    fontSize: 30,
-    alignContent: "center",
-    textAlign: "right",
-    fontFamily: "challenger-font",
-    position: "relative",
-  },
-  settings: {
-    top: "65%",
-    paddingRight: 25,
-    fontFamily: "challenger-font",
-    position: "relative",
-    alignSelf: "baseline",
-  },
-  share: {
-    top: "65%",
-    paddingRight: 25,
-    fontFamily: "challenger-font",
-    position: "relative",
-    alignSelf: "baseline",
-  },
-  navbox: {
-    flex: 1,
-    flexDirection: "row",
-    width: "100%",
-    height: "40%",
-    backgroundColor: "rgba(49, 158, 232, 0.9)",
-    borderColor: "black",
-    borderWidth: 2,
-    alignItems: "center",
-    position: "relative",
-    justifyContent: "space-between",
-    alignSelf: "flex-start",
-    bottom: 65,
-  },
-
-  cityBox: {
-    // width: "100%",
-    // height: "25%",
-    flexDirection: "row",
-    backgroundColor: "rgba(49, 158, 232, 0.9)",
-    borderColor: "black",
-    borderWidth: 2,
-    alignItems: "center",
-  },
-  citySelectText: {
-    flex: 1,
-    fontSize: 35,
-    fontFamily: "challenger-font",
-    position: "relative",
-    paddingLeft: "19%",
-    paddingTop: 10,
-    alignSelf: "baseline",
-  },
-  cloudgif2: {
-    width: "100%",
-    height: "100%",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  navFlex: {
-    flex: 1,
-    flexDirection: "column",
-    justifyContent: "space-evenly",
-  },
-
-  // navImage: {
-  //   flex: 3,
-  //   width: "100%",
-  //   height: "50%",
-  //   position: "relative",
-  //   alignSelf: "flex-end",
-  // },
-});
