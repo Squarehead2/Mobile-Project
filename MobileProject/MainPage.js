@@ -16,128 +16,125 @@ import {
 import { useFonts } from "expo-font";
 import * as Location from "expo-location";
 
-const openWeatherKey = `a6277e584c795319d37d6bd88bf2c01d`;
-let url = `http://api.openweathermap.org/data/2.5/onecall?&units=metric&exclude=minutely&appid=${openWeatherKey}`;
-
 export default function MainPage() {
   const [forecast, setForecast] = useState(null);
-  const [refreshing, setRefreshing] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [location, setLocation] = useState(null);
 
-  const loadForecast = async () => {
-    setRefreshing(true);
-
-    const { status } = await location.requestPermissionsAsync();
-    if (status !== "granted") {
-      Alert.alert("Permission to accesss location was denied! ");
-    }
-
-    let location = await location.getCurrentPositionAsync({
-      enableHighAccuracy: true,
-    });
-
-    const response = await fetch(
-      `${url}&lat=${location.coords.latitude}&lon=${location.coords.longitude}`
-    );
-    const data = await response.json();
-
-    if (!response.ok) {
-      Alert.alert(`Error retrieving weather data: ${data.message}`);
-    } else {
-      setForecast(data);
-    }
-    setRefreshing(false);
-  };
   useEffect(() => {
-    if (!forecast) {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        Alert.alert("Permission to access location was denied");
+        return;
+      }
+
+      let loc = await Location.getCurrentPositionAsync({});
+      setLocation(loc);
+    })();
+  }, []);
+
+  useEffect(() => {
+    if (location) {
+      const { latitude, longitude } = location.coords;
+      const openWeatherKey = `4cf6adcd5a13aae7d15ab91cf82cc941`;
+      const lang = "en";
+      const units = "metric";
+      let url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&lang=${lang}&units=${units}&appid=${openWeatherKey}`;
+
+      const loadForecast = async () => {
+        try {
+          const response = await fetch(url);
+          if (!response.ok) {
+            throw new Error("Failed to fetch data");
+          }
+          const data = await response.json();
+          setForecast(data);
+        } catch (error) {
+          Alert.alert("Error", error.message);
+        } finally {
+          setLoading(false);
+        }
+      };
+
       loadForecast();
     }
-  });
+  }, [location]);
 
-  if (!forecast) {
+  if (loading) {
     return (
-      <SafeAreaView style={style.loading}>
-        <Text>loading</Text>
+      <SafeAreaView style={styles.loading}>
+        <Text>Loading...</Text>
         <ActivityIndicator size="large" />
       </SafeAreaView>
     );
   }
 
-  const current = forecast.current.weather[0];
+  if (!forecast) {
+    return (
+      <SafeAreaView style={styles.loading}>
+        <Text>Failed to load data</Text>
+      </SafeAreaView>
+    );
+  }
 
   return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView
-        refreshControl={
-          <RefreshControl
-            onRefresh={() => {
-              loadForecast();
-            }}
-            refreshing={refreshing}
-          />
-        }
-      >
-        <Text style={styles.title}>Current Weather</Text>
-        <View style={styles.current}>
-          <Image
-            style={styles.largeIcon}
-            source={{
-              uri: `http://openweathermap.org/img/wn/${current.icon}@4x.png`,
-            }}
-          />
-          <Text style={styles.currentTemp}>
-            {Math.round(forecast.curren.temp)}°C
-          </Text>
-        </View>
-
-        <Text style={styles.currentDescription}>{current.description}</Text>
-        <View>
-          <Text style={styles.subtitle}>Hourly Forecast</Text>
-          <FlatList
-            horizontal
-            data={forecast.hourly.slice(0, 24)}
-            keyExtractor={(item, index) => index.toString()}
-            renderItem={(hour) => {
-              const weather = hour.item.weather[0];
-              var dt = new Date(hour.item.dt * 1000);
-              return (
-                <View style={styles.hour}>
-                  <Text>{dt.toLocaleTimeString().replace(/:\d+ /, " ")}</Text>
-                  <Text>{Math.round(hour.item.temp)}°C</Text>
-                  <Image
-                    style={styles.smallIcon}
-                    source={{
-                      uri: `http://openweathermap.org/img/wn/${weather.icon}@4x.png`,
-                    }}
-                  />
-                  <Text>{weather.description}</Text>
-                </View>
-              );
-            }}
-          />
-        </View>
-
-        <Text style={styles.subtitle}>Next 7 Days</Text>
-        {forecast.daily.slice(0, 7).map((d) => {
-          const weather = d.weather[0];
-          var dt = new Date(d.dt * 1000);
-          return (
-            <View style={styles.day} key={d.dt}>
-              <Text style={styles.dayTemp}>{Math.round(d.temp.max)}°C</Text>
-              <Image
-                style={styles.smallIcon}
-                source={{
-                  uri: `http://openweathermap.org/img/wn/${weather.icon}@4x.png`,
-                }}
-              />
-              <View style={styles.dayDetails}>
-                <Text>{dt.toLocaleDateString}</Text>
-                <Text>{weather.description}</Text>
-              </View>
-            </View>
-          );
-        })}
+    <View style={styles.container}>
+      <ImageBackground
+        source={require("./assets/Clouds2.gif")}
+        style={styles.cloudgif}
+      />
+      <ScrollView>
+        <Text style={styles.header}>Today's Forecast</Text>
+        <Text style={styles.location}>
+          {forecast.name}, {forecast.sys.country}
+        </Text>
+        <Text style={styles.temp}>{forecast.main.temp}°C</Text>
+        <Text style={styles.description}>
+          {forecast.weather[0].description}
+        </Text>
+        <Text style={styles.feelslike}>
+          Feels like {forecast.main.feels_like}°C
+        </Text>
+        <Text style={styles.humidity}>Humidity: {forecast.main.humidity}%</Text>
+        <Text style={styles.wind}>Wind: {forecast.wind.speed} km/h</Text>
+        <Text style={styles.pressure}>
+          Pressure: {forecast.main.pressure} hPa
+        </Text>
+        <Text style={styles.visibility}>
+          Visibility: {forecast.visibility / 1000} km
+        </Text>
+        <Text style={styles.sunrise}>
+          Sunrise:{" "}
+          {new Date(forecast.sys.sunrise * 1000).toLocaleTimeString("en-US")}
+        </Text>
+        <Text style={styles.sunset}>
+          Sunset:{" "}
+          {new Date(forecast.sys.sunset * 1000).toLocaleTimeString("en-US")}
+        </Text>
+        <Text style={styles.timezone}>
+          Timezone: {forecast.timezone / 3600} GMT
+        </Text>
+        <Text style={styles.date}>
+          {new Date().toLocaleDateString("en-US", {
+            weekday: "long",
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })}
+        </Text>
+        <Text style={styles.time}>
+          {new Date().toLocaleTimeString("en-US", {
+            hour: "numeric",
+            minute: "numeric",
+          })}
+        </Text>
+        <Image
+          source={require("./assets/cloudsshort.png")}
+          style={styles.navImage}
+        />
       </ScrollView>
-    </SafeAreaView>
+      </SafeAreaView>
   );
 }
 
@@ -219,8 +216,6 @@ const styles = StyleSheet.create({
     },
   
 });
-
-
 
 
 
