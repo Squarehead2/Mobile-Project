@@ -141,4 +141,84 @@ export default function MainPage() {
   );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  title :{
+    width: '100',
+    textAlign: 'center',
+    fontSize: 42,
+    fontFamily: "challenger-font",
+    color: '#000000',
+
+  },
+  subtitle:{
+    fontSize: 24,
+    marginVertical: 10,
+    marginLeft: 2,
+    color: '#000000',
+    fontFamily: 'challenger-font',
+  },
+  container: {
+    flex: 1,
+    backgroundColor: "rgb(49, 158, 232)",
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  loading:{
+    flex:1,
+    backgroundColor: "rgb(49, 158, 232)",
+    alignItems: 'center',
+    justifyContent: 1,
+  },
+  current:{
+    flexDirection: 'row',
+    alignItems: 'center',
+    alignContent: 'center',
+    fontFamily:'challenger-font',
+  },
+  currentTemp:{
+    fontsize: 30,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    fontFamily: 'challenger-font',
+    color: '#000000',
+  },
+  currentDescription: {
+    width: '100%',
+    textAlign: 'center',
+    fontWeight: '200',
+    fontsize: 24,
+    fontFamily: 'challenger-font',
+    marginBottom: 24
+    },
+    hour: {
+      padding: 6,
+      alignItems: 'center',
+      fontFamily: 'challenger-font',
+    },
+    day:{
+      flexDirection: 'row',
+      fontFamily: 'challenger-font'
+    },
+    dayDetails:{
+      justifyContent: 'center',
+    },
+    dayTemp:{
+      marginLeft: 10,
+      alignSelf: 'center',
+      fontSize: 20,
+      fontFamily: 'challenger-font',
+      color: '#000000'
+    },
+    largeIcon: {
+      width: 250,
+      height: 200,
+    },
+    smallIcon: {
+      width: 100,
+      height: 100,    
+    },
+  
+});
+
+
+export default MainPage;
