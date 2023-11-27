@@ -214,7 +214,12 @@ export default function HomePage() {
           </ScrollView>
 
           <View style={styles.cityBox}>
-            <Text style={styles.citySelectText}>More Details</Text>
+            <Text
+              style={styles.citySelectText}
+              onPress={() => navigation.navigate("MainPage")}
+            >
+              More Details
+            </Text>
           </View>
         </ImageBackground>
       </View>
