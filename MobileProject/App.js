@@ -24,17 +24,17 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{
-          headerShown: false,
-        }}
-      >
-        <Stack.Screen name="HomePage" component={HomePage} />
-        <Stack.Screen name="Setting" component={Setting} />
-        <Stack.Screen name="Preferences" component={Preferences} />
-        <Stack.Screen name="AppInfo" component={AppInfo} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <View style={styles.container}>
+      <ImageBackground
+        source={require("./assets/Clouds2.gif")}
+        style={styles.cloudgif}
+      />
+      <ScrollView>
+        <Text style={styles.header}>WACKY WEATHER</Text>
+
+        <StatusBar style="auto" />
+      </ScrollView>
+      <TextInput style={styles.input} placeholder="Enter City Name" />
+    </View>
   );
 }
