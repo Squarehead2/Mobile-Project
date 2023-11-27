@@ -79,7 +79,7 @@ export default function MainPage() {
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <ImageBackground
         source={require("./assets/Clouds2.gif")}
         style={styles.cloudgif}
@@ -134,7 +134,7 @@ export default function MainPage() {
           style={styles.navImage}
         />
       </ScrollView>
-      </SafeAreaView>
+    </SafeAreaView>
   );
 }
 
