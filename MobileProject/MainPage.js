@@ -139,78 +139,131 @@ export default function MainPage() {
 }
 
 const styles = StyleSheet.create({
-  title: {
-    width: "100",
-    textAlign: "center",
-    fontSize: 42,
-    fontFamily: "challenger-font",
-    color: "#000000",
-  },
-  subtitle: {
-    fontSize: 24,
-    marginVertical: 10,
-    marginLeft: 2,
-    color: "#000000",
-    fontFamily: "challenger-font",
+  loading: {
+    flex: 1,
+    backgroundColor: "rgb(49, 158, 232)",
+    alignItems: "center",
+    justifyContent: "center",
   },
   container: {
     flex: 1,
     backgroundColor: "rgb(49, 158, 232)",
     alignItems: "center",
-    justifyContent: "center",
   },
-  loading: {
-    flex: 1,
-    backgroundColor: "rgb(49, 158, 232)",
-    alignItems: "center",
-    justifyContent: 1,
-  },
-  current: {
-    flexDirection: "row",
-    alignItems: "center",
-    alignContent: "center",
-    fontFamily: "challenger-font",
-  },
-  currentTemp: {
-    fontsize: 30,
-    fontWeight: "bold",
+
+  header: {
+    fontSize: 36,
+
     textAlign: "center",
     fontFamily: "challenger-font",
-    color: "#000000",
+
+    marginTop: 20,
   },
-  currentDescription: {
-    width: "100%",
+  location: {
+    fontSize: 18,
+    fontFamily: "challenger-font",
+
     textAlign: "center",
-    fontWeight: "200",
-    fontsize: 24,
+    marginBottom: 10,
+  },
+  temp: {
+    fontSize: 36,
     fontFamily: "challenger-font",
-    marginBottom: 24,
+
+    textAlign: "center",
+    marginBottom: 10,
   },
-  hour: {
-    padding: 6,
-    alignItems: "center",
+  description: {
+    fontSize: 18,
     fontFamily: "challenger-font",
+
+    textAlign: "center",
+    marginBottom: 10,
   },
-  day: {
-    flexDirection: "row",
+  feelslike: {
+    fontSize: 16,
     fontFamily: "challenger-font",
+
+    textAlign: "center",
+    marginBottom: 10,
   },
-  dayDetails: {
-    justifyContent: "center",
+  humidity: {
+    fontSize: 16,
+    fontFamily: "challenger-font",
+
+    textAlign: "center",
+    marginBottom: 10,
   },
-  dayTemp: {
-    marginLeft: 10,
+  wind: {
+    fontSize: 16,
+    fontFamily: "challenger-font",
+
+    textAlign: "center",
+    marginBottom: 10,
+  },
+  pressure: {
+    fontSize: 16,
+    fontFamily: "challenger-font",
+
+    textAlign: "center",
+    marginBottom: 10,
+  },
+  visibility: {
+    fontSize: 16,
+    fontFamily: "challenger-font",
+
+    textAlign: "center",
+    marginBottom: 10,
+  },
+  sunrise: {
+    fontSize: 16,
+    fontFamily: "challenger-font",
+
+    textAlign: "center",
+    marginBottom: 10,
+  },
+  sunset: {
+    fontSize: 16,
+    fontFamily: "challenger-font",
+
+    textAlign: "center",
+    marginBottom: 10,
+  },
+  timezone: {
+    fontSize: 16,
+    fontFamily: "challenger-font",
+
+    textAlign: "center",
+    marginBottom: 10,
+  },
+  date: {
+    fontSize: 18,
+    fontFamily: "challenger-font",
+    textAlign: "center",
+    marginTop: 20,
+  },
+  time: {
+    fontSize: 18,
+    fontFamily: "challenger-font",
+
+    textAlign: "center",
+    marginBottom: 20,
+  },
+  navImage: {
+    width: 50,
+    height: 50,
     alignSelf: "center",
-    fontSize: 20,
+    marginTop: 20,
+    marginBottom: 20,
+  },
+  input: {
+    width: "80%",
+    height: 40,
+    borderColor: "gray",
+    borderWidth: 1,
+    paddingLeft: 10,
+    marginBottom: 20,
     fontFamily: "challenger-font",
-    color: "#000000",
-  },
-  largeIcon: {
-    width: 250,
-    height: 200,
-  },
-  smallIcon: {
-    width: 100,
-    height: 100,
+    fontSize: 16,
   },
 });

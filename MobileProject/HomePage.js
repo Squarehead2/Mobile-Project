@@ -14,7 +14,7 @@ import { SimpleLineIcons } from "@expo/vector-icons";
 
 import { useNavigation } from "@react-navigation/native";
 import TimeOfDay from "./utils/TimeOfDay";
-import styles from "./assets/StyleSheet";
+import styles from "./assets/HomeStyleSheet";
 
 // Get the current time and date
 // Get the current time and date
