@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "rgb(49, 158, 232)",
     alignItems: "center",
-    justifyContent: 1,
+    justifyContent: 'center',
   },
   current: {
     flexDirection: "row",
