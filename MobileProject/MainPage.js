@@ -29,20 +29,22 @@ export default function MainPage() {
         Alert.alert("Permission to access location was denied");
         return;
       }
-
-  useEffect(()=>{ 
-    if(forecast){
-      const dataIcon = forecastWeather[0].icon;
+    })();
+  }, []);
+  useEffect(() => {
+    if (forecast) {
+      const dataIcon = forecast.weather[0].icon;
       const weatherIconUrl = `http://openweathermap.org/img/wn/${dataIcon}.png`;
       setWeatherIcon(weatherIconUrl);
     }
-  
-  })
-
-      let loc = await Location.getCurrentPositionAsync({});
-      setLocation(loc);
-    })();
   }, [forecast]);
+
+  (async () => {
+    let loc = await Location.getCurrentPositionAsync({});
+    setLocation(loc);
+  })();
+
+  
 
   useEffect(() => {
     if (location) {
