@@ -20,6 +20,7 @@ export default function MainPage() {
   const [forecast, setForecast] = useState(null);
   const [loading, setLoading] = useState(true);
   const [location, setLocation] = useState(null);
+  const [weatherIcon, setWeatherIcon] = useState(null);
 
   useEffect(() => {
     (async () => {
@@ -29,10 +30,19 @@ export default function MainPage() {
         return;
       }
 
+  useEffect(()=>{ 
+    if(forecast){
+      const dataIcon = forecastWeather[0].icon;
+      const weatherIconUrl = `http://openweathermap.org/img/wn/${dataIcon}.png`;
+      setWeatherIcon(weatherIconUrl);
+    }
+  
+  })
+
       let loc = await Location.getCurrentPositionAsync({});
       setLocation(loc);
     })();
-  }, []);
+  }, [forecast]);
 
   useEffect(() => {
     if (location) {
@@ -257,5 +267,12 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     fontFamily: "challenger-font",
     fontSize: 16,
+  },
+  weatherIcon:{
+    width: 50,
+    height: 50,
+    alignSelf:'center',
+    marginTop: 20,
+    marginBottom: 20,
   },
 });
