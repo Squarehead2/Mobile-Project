@@ -59,15 +59,15 @@ export default function MainPage() {
           }
           const data = await response.json();
     
-          const dataIcon = data.weather[0].icon; // Assuming 'data' is the API response
+          const dataIcon = data.weather[0].icon; 
           const weatherIconUrl = `http://openweathermap.org/img/wn/${dataIcon}.png`;
           
-          console.log(weatherIconUrl); // Log the constructed icon URL
+          console.log(weatherIconUrl); 
           
           setForecast(data);
           setWeatherIcon(weatherIconUrl);
         } catch (error) {
-          Alert.alert("Error", error.message);
+          Alert.alert("Error", error.message);O
         } finally {
           setLoading(false);
         }
@@ -145,7 +145,7 @@ export default function MainPage() {
           })}
         </Text> 
         {weatherIcon && (
-          <Image source={{ uri: weatherIcon }} style={styles.weatherIcon} />
+          <Image source={{ uri: weatherIcon }} style={styles.dataIcon} />
         )}
       
       </ScrollView>
