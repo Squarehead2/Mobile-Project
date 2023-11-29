@@ -58,14 +58,20 @@ export default function MainPage() {
             throw new Error("Failed to fetch data");
           }
           const data = await response.json();
+    
+          const dataIcon = data.weather[0].icon; // Assuming 'data' is the API response
+          const weatherIconUrl = `http://openweathermap.org/img/wn/${dataIcon}.png`;
+          
+          console.log(weatherIconUrl); // Log the constructed icon URL
+          
           setForecast(data);
+          setWeatherIcon(weatherIconUrl);
         } catch (error) {
           Alert.alert("Error", error.message);
         } finally {
           setLoading(false);
         }
       };
-
       loadForecast();
     }
   }, [location]);
