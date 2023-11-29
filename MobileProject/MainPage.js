@@ -139,6 +139,9 @@ export default function MainPage() {
             minute: "numeric",
           })}
         </Text>
+        {weatherIcon && ( 
+          <Image source = {{ uri: weatherIcon}} style = {styles.weatherIcon}/>
+        )}
         <Image
           source={require("./assets/cloudsshort.png")}
           style={styles.navImage}
