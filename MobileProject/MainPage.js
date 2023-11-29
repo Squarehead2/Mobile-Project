@@ -3,25 +3,24 @@ import {
   StyleSheet,
   Text,
   View,
-  TextInput,
   Image,
   ImageBackground,
   ScrollView,
-  SafeAreaView, 
-  FlatList,
+  SafeAreaView,
   Alert,
   RefreshControl,
   ActivityIndicator,
 } from "react-native";
 import { useFonts } from "expo-font";
 import * as Location from "expo-location";
-import Icon from "react-native-vector-icon/Feather";
+import Icon from "react-native-vector-icons/Feather";
+import { getWeatherData } from './api';
 
 export default function MainPage() {
   const [forecast, setForecast] = useState(null);
   const [loading, setLoading] = useState(true);
   const [location, setLocation] = useState(null);
-  const [weatherCondition, setWeatherCondition] = useState(null); 
+  const [weatherCondition, setWeatherCondition] = useState(null);
 
   useEffect(() => {
     (async () => {
@@ -38,14 +37,19 @@ export default function MainPage() {
 
   useEffect(() => {
     if (location) {
-      const { latitude, longitude } = location.coords;
-      const openWeatherKey = `4cf6adcd5a13aae7d15ab91cf82cc941`;
-      const lang = "en";
-      const units = "metric";
-      let url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&lang=${lang}&units=${units}&appid=${openWeatherKey}`;
-
-      const loadForecast = async () => {
+      const fetchData = async () => {
         try {
+          const cityName = 'YourCityName'; // Replace with your actual city name
+          const apiKey = 'YourAPIKey'; // Replace with your actual OpenWeather API key
+          const iconCode = await getWeatherData(cityName, apiKey);
+          setWeatherCondition(iconCode);
+
+          const { latitude, longitude } = location.coords;
+          const openWeatherKey = `4cf6adcd5a13aae7d15ab91cf82cc941`;
+          const lang = "en";
+          const units = "metric";
+          let url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&lang=${lang}&units=${units}&appid=${openWeatherKey}`;
+
           const response = await fetch(url);
           if (!response.ok) {
             throw new Error("Failed to fetch data");
@@ -59,7 +63,7 @@ export default function MainPage() {
         }
       };
 
-      loadForecast();
+      fetchData();
     }
   }, [location]);
 
@@ -106,7 +110,17 @@ export default function MainPage() {
         <Text style={styles.visibility}>
           Visibility: {forecast.visibility / 1000} km
         </Text>
-       
+        <Text style={styles.sunrise}>
+          Sunrise:{" "}
+          {new Date(forecast.sys.sunrise * 1000).toLocaleTimeString("en-US")}
+        </Text>
+        <Text style={styles.sunset}>
+          Sunset:{" "}
+          {new Date(forecast.sys.sunset * 1000).toLocaleTimeString("en-US")}
+        </Text>
+        <Text style={styles.timezone}>
+          Timezone: {forecast.timezone / 3600} GMT
+        </Text>
         <Text style={styles.date}>
           {new Date().toLocaleDateString("en-US", {
             weekday: "long",
@@ -115,17 +129,14 @@ export default function MainPage() {
             day: "numeric",
           })}
         </Text>
-        <Icon name={weatherCondition} size={30} color="white" />
-        <Image
-          source={require("./assets/cloudsshort.png")}
-          style={styles.navImage}
-        />
-         <Text style={styles.time}>
+        <Text style={styles.time}>
           {new Date().toLocaleTimeString("en-US", {
             hour: "numeric",
             minute: "numeric",
           })}
         </Text>
+        {/* Display weather condition icon */}
+        <Icon name={weatherCondition} size={50} color="black" />
         <Image
           source={require("./assets/cloudsshort.png")}
           style={styles.navImage}
@@ -134,6 +145,9 @@ export default function MainPage() {
     </SafeAreaView>
   );
 }
+
+
+
 
 const styles = StyleSheet.create({
   loading: {
