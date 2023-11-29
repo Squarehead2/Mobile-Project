@@ -3,24 +3,23 @@ import {
   StyleSheet,
   Text,
   View,
+  TextInput,
   Image,
   ImageBackground,
   ScrollView,
   SafeAreaView,
+  FlatList,
   Alert,
   RefreshControl,
   ActivityIndicator,
 } from "react-native";
 import { useFonts } from "expo-font";
 import * as Location from "expo-location";
-import Icon from "react-native-vector-icons/Feather";
-import { getWeatherData } from './api';
 
 export default function MainPage() {
   const [forecast, setForecast] = useState(null);
   const [loading, setLoading] = useState(true);
   const [location, setLocation] = useState(null);
-  const [weatherCondition, setWeatherCondition] = useState(null);
 
   useEffect(() => {
     (async () => {
@@ -37,19 +36,14 @@ export default function MainPage() {
 
   useEffect(() => {
     if (location) {
-      const fetchData = async () => {
+      const { latitude, longitude } = location.coords;
+      const openWeatherKey = `4cf6adcd5a13aae7d15ab91cf82cc941`;
+      const lang = "en";
+      const units = "metric";
+      let url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&lang=${lang}&units=${units}&appid=${openWeatherKey}`;
+
+      const loadForecast = async () => {
         try {
-          const cityName = 'YourCityName'; // Replace with your actual city name
-          const apiKey = 'YourAPIKey'; // Replace with your actual OpenWeather API key
-          const iconCode = await getWeatherData(cityName, apiKey);
-          setWeatherCondition(iconCode);
-
-          const { latitude, longitude } = location.coords;
-          const openWeatherKey = `4cf6adcd5a13aae7d15ab91cf82cc941`;
-          const lang = "en";
-          const units = "metric";
-          let url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&lang=${lang}&units=${units}&appid=${openWeatherKey}`;
-
           const response = await fetch(url);
           if (!response.ok) {
             throw new Error("Failed to fetch data");
@@ -63,7 +57,7 @@ export default function MainPage() {
         }
       };
 
-      fetchData();
+      loadForecast();
     }
   }, [location]);
 
@@ -135,8 +129,6 @@ export default function MainPage() {
             minute: "numeric",
           })}
         </Text>
-        {/* Display weather condition icon */}
-        <Icon name={weatherCondition} size={50} color="black" />
         <Image
           source={require("./assets/cloudsshort.png")}
           style={styles.navImage}
@@ -145,9 +137,6 @@ export default function MainPage() {
     </SafeAreaView>
   );
 }
-
-
-
 
 const styles = StyleSheet.create({
   loading: {
