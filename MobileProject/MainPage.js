@@ -141,15 +141,7 @@ export default function MainPage() {
         {weatherIcon && (
           <Image source={{ uri: weatherIcon }} style={styles.weatherIcon} />
         )}
-        <Image
-          source={require("./assets/cloudsshort.png")}
-          style={styles.navImage}
-        />
-       
-        <Image
-          source={require("./assets/cloudsshort.png")}
-          style={styles.navImage}
-        />
+      
       </ScrollView>
     </SafeAreaView>
   );
@@ -275,4 +267,10 @@ const styles = StyleSheet.create({
     fontFamily: "challenger-font",
     fontSize: 16,
   },
+  dataIcon:{
+    width: 50,
+    height: 50, 
+    marginTop: 20,
+    marginBottom: 20,
+  }
 });
