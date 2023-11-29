@@ -7,7 +7,7 @@ import {
   Image,
   ImageBackground,
   ScrollView,
-  SafeAreaView,
+  SafeAreaView, 
   FlatList,
   Alert,
   RefreshControl,
@@ -15,11 +15,13 @@ import {
 } from "react-native";
 import { useFonts } from "expo-font";
 import * as Location from "expo-location";
+import Icon from "react-native-vector-icon/Feather";
 
 export default function MainPage() {
   const [forecast, setForecast] = useState(null);
   const [loading, setLoading] = useState(true);
   const [location, setLocation] = useState(null);
+  const [weatherCondition, setWeatherCondition] = useState(null); 
 
   useEffect(() => {
     (async () => {
@@ -104,17 +106,7 @@ export default function MainPage() {
         <Text style={styles.visibility}>
           Visibility: {forecast.visibility / 1000} km
         </Text>
-        <Text style={styles.sunrise}>
-          Sunrise:{" "}
-          {new Date(forecast.sys.sunrise * 1000).toLocaleTimeString("en-US")}
-        </Text>
-        <Text style={styles.sunset}>
-          Sunset:{" "}
-          {new Date(forecast.sys.sunset * 1000).toLocaleTimeString("en-US")}
-        </Text>
-        <Text style={styles.timezone}>
-          Timezone: {forecast.timezone / 3600} GMT
-        </Text>
+       
         <Text style={styles.date}>
           {new Date().toLocaleDateString("en-US", {
             weekday: "long",
@@ -123,7 +115,12 @@ export default function MainPage() {
             day: "numeric",
           })}
         </Text>
-        <Text style={styles.time}>
+        <Icon name={weatherCondition} size={30} color="white" />
+        <Image
+          source={require("./assets/cloudsshort.png")}
+          style={styles.navImage}
+        />
+         <Text style={styles.time}>
           {new Date().toLocaleTimeString("en-US", {
             hour: "numeric",
             minute: "numeric",
