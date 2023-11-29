@@ -20,6 +20,7 @@ export default function MainPage() {
   const [forecast, setForecast] = useState(null);
   const [loading, setLoading] = useState(true);
   const [location, setLocation] = useState(null);
+  const [weatherIcon, setWeatherIcon] = useState(null);
 
   useEffect(() => {
     (async () => {
@@ -33,6 +34,14 @@ export default function MainPage() {
       setLocation(loc);
     })();
   }, []);
+
+  useEffect(() => {
+    if (forecast) {
+      const dataIcon = forecast.weather[0].icon;
+      const weatherIconUrl = `http://openweathermap.org/img/wn/${dataIcon}.png`;
+      setWeatherIcon(weatherIconUrl);
+    }
+  }, [forecast]);
 
   useEffect(() => {
     if (location) {
@@ -128,7 +137,15 @@ export default function MainPage() {
             hour: "numeric",
             minute: "numeric",
           })}
-        </Text>
+        </Text> 
+        {weatherIcon && (
+          <Image source={{ uri: weatherIcon }} style={styles.weatherIcon} />
+        )}
+        <Image
+          source={require("./assets/cloudsshort.png")}
+          style={styles.navImage}
+        />
+       
         <Image
           source={require("./assets/cloudsshort.png")}
           style={styles.navImage}
