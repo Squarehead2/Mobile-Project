@@ -104,6 +104,11 @@ export default function MainPage() {
         <Text style={styles.location}>
           {forecast.name}, {forecast.sys.country}
         </Text>
+        
+        {weatherIcon && (
+          <Image source={{ uri: weatherIcon }} style={styles.dataIcon} />
+        )}
+      
         <Text style={styles.temp}>{forecast.main.temp}°C</Text>
         <Text style={styles.description}>
           {forecast.weather[0].description}
@@ -144,9 +149,7 @@ export default function MainPage() {
             minute: "numeric",
           })}
         </Text> 
-        {weatherIcon && (
-          <Image source={{ uri: weatherIcon }} style={styles.dataIcon} />
-        )}
+       
       
       </ScrollView>
     </SafeAreaView>
@@ -274,9 +277,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   dataIcon:{
-    width: 50,
-    height: 50, 
-    marginTop: 20,
-    marginBottom: 20,
+    width: 100,
+    height: 100, 
+    marginTop: 50,
+    marginBottom: 50,
+    alignItems: 'center',
+    
+
   }
 });
