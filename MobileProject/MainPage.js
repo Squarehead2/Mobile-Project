@@ -162,12 +162,14 @@ const styles = StyleSheet.create({
     backgroundColor: "rgb(49, 158, 232)",
     alignItems: "center",
     justifyContent: "center",
+    fontFamily: "challenger-font"
   },
   container: {
     flex: 1,
     backgroundColor: "rgb(49, 158, 232)",
     alignItems: "center",
     justifyContent: 'center',
+    fontFamily:"challenger-font"
   },
   location: {
     fontSize: 18,
@@ -175,6 +177,13 @@ const styles = StyleSheet.create({
 
     textAlign: "center",
     marginBottom: 10,
+  },
+
+  todaysForecast:{
+    fontSize: 18,
+    fontFamily:"challenger-font",
+    alignItems: 'center',
+    textAlign: 'center,'
   },
   temp: {
     fontSize: 36,
@@ -277,13 +286,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   dataIcon:{
-    width: 100,
-    height: 100, 
+    width: 70,
+    height: 70, 
     marginTop: 20,
     marginBottom: 30,
     alignItems: 'center',
     justifyContent: 'center',
-    
+
 
   }
 });
