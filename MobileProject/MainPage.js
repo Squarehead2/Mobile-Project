@@ -279,8 +279,8 @@ const styles = StyleSheet.create({
   dataIcon:{
     width: 100,
     height: 100, 
-    marginTop: 50,
-    marginBottom: 50,
+    marginTop: 20,
+    marginBottom: 30,
     alignItems: 'center',
     
 
