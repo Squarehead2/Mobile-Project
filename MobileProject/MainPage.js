@@ -100,7 +100,7 @@ export default function MainPage() {
         style={styles.cloudgif}
       />
       <ScrollView>
-        <Text style={styles.header}>Today's Forecast</Text>
+        <Text style={styles.header} fontFamily='challenger-font' textAlign='center'>Today's Forecast</Text>
         <Text style={styles.location}>
           {forecast.name}, {forecast.sys.country}
         </Text>
