@@ -171,6 +171,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     fontFamily:"challenger-font"
   },
+  todaysForecast:{
+    textAlign:'center',
+    fontSize: 18,
+    fontFamily: 'challenger-font'
+  },
   location: {
     fontSize: 18,
     fontFamily: "challenger-font",
