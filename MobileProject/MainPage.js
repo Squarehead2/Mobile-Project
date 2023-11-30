@@ -179,12 +179,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
 
-  todaysForecast:{
-    fontSize: 18,
-    fontFamily:"challenger-font",
-    alignItems: 'center',
-    textAlign: 'center,'
-  },
   temp: {
     fontSize: 36,
     fontFamily: "challenger-font",
