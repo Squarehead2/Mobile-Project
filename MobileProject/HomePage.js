@@ -181,6 +181,7 @@ export default function HomePage() {
 
             <SimpleLineIcons
               name="settings"
+              paddingTop={20}
               style={styles.settings}
               size={24}
               color="black"

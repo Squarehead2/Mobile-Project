@@ -1,6 +1,6 @@
 // Preferences.js
 
-import React from "react";
+import React, { useState } from "react";
 import { useFonts } from "expo-font";
 import { AntDesign } from "@expo/vector-icons";
 import { StyleSheet, View, Text, TextInput, Switch } from "react-native";
@@ -16,6 +16,8 @@ const Preferences = () => {
   const [loaded] = useFonts({
     "challenger-font": require("./assets/fonts/ChallengerROUGH.ttf"),
   });
+  const [celciusEnabled, setCelciusEnabled] = useState(false);
+  const [timeEnabled, setTimeEnabled] = useState(false);
 
   return (
     <View style={styles.container}>
@@ -25,6 +27,7 @@ const Preferences = () => {
             name="arrowleft"
             size={24}
             color="black"
+            marginLeft={10}
             style={styles.settingBack}
             onPress={() => navigation.goBack()}
           />
@@ -35,11 +38,25 @@ const Preferences = () => {
         <Text style={styles.header}>Preferences</Text>
       </View>
       <View />
+
+      <View style={styles.settingItem}>
       <Text style={styles.settingLabel}>Unit of Measure in Celcius</Text>
-      <Switch />
+      <Switch 
+          value={celciusEnabled}
+          onValueChange={() => setCelciusEnabled(!celciusEnabled)}
+      />
+      </View>
+
+      <View style={styles.settingItem}>
       <Text style={styles.settingLabel}>Time in 24 hours</Text>
-      <Switch />
+      <Switch 
+          value={timeEnabled}
+          onValueChange={() => setTimeEnabled(!timeEnabled)}
+      />
+      </View>
+
     </View>
+    
   );
 };
 
@@ -53,9 +70,10 @@ const styles = StyleSheet.create({
       paddingTop: 50, // Adjust paddingTop for the header
     },
     header: {
-      fontSize: 35, // Reduce the font size
+      fontSize: 36, // Reduce the font size
       fontFamily: "challenger-font",
       paddingBottom: 50, // Adjust paddingBottom for the footer
+      paddingLeft: 40,
       alignSelf: "center",
     },
     headerContainer: {
@@ -66,18 +84,19 @@ const styles = StyleSheet.create({
     settingItem: {
       flexDirection: "row",
       alignItems: "center",
-      marginBottom: 40,
       fontFamily: "challenger-font",
+      marginBottom: 30,
     },
     settingBack: {
       flexDirection: "row",
       alignItems: "center",
       marginBottom: 40,
+      fontSize: 18,
       fontFamily: "challenger-font",
       alignSelf: "baseline",
     },
     settingLabel: {
-      fontSize: 20,
+      fontSize: 18,
       marginRight: 10,
       fontFamily: "challenger-font",
     },

@@ -1,5 +1,5 @@
 // Settings.js
-import React from "react";
+import React, { useState } from "react";
 import { useFonts } from "expo-font";
 import { AntDesign } from "@expo/vector-icons";
 import { StyleSheet, View, Text, TextInput, Switch } from "react-native";
@@ -10,6 +10,7 @@ import Preferences from "./Preferences";
 import AppInfo from "./AppInfo";
 
 
+
 const Settings = () => {
   const navigation = useNavigation();
   const navigateToScreen = (screenName) => {
@@ -18,8 +19,10 @@ const Settings = () => {
   const [loaded] = useFonts({
     "challenger-font": require("./assets/fonts/ChallengerROUGH.ttf"),
   });
+  const [notificationsEnabled, setNotificationsEnabled] = useState(false);
+  const [locationTrackingEnabled, setLocationTrackingEnabled] = useState(false);
 
-  
+
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
@@ -28,6 +31,7 @@ const Settings = () => {
             name="arrowleft"
             size={24}
             color="black"
+            marginLeft={10}
             style={styles.settingBack}
             onPress={() => navigation.goBack()}
           />
@@ -42,12 +46,19 @@ const Settings = () => {
       {/* Add your settings options here */}
       <View style={styles.settingItem}>
         <Text style={styles.settingLabel}>Notifications:</Text>
-        <Switch />
+        <Switch 
+           value={notificationsEnabled}
+          onValueChange={() => setNotificationsEnabled(!notificationsEnabled)}
+        />
       </View>
+      
 
       <View style={styles.settingItem}>
         <Text style={styles.settingLabel}>Location Tracking:</Text>
-        <Switch />
+        <Switch
+         value={locationTrackingEnabled}
+          onValueChange={() => setLocationTrackingEnabled(!locationTrackingEnabled)}
+         />
       </View>
 
       <View style={styles.settingItem}>
@@ -74,10 +85,10 @@ const styles = StyleSheet.create({
     paddingTop: 50, // Adjust paddingTop for the header
   },
   header: {
-    fontSize: 35, // Reduce the font size
+    fontSize: 36, // Reduce the font size
     fontFamily: "challenger-font",
     paddingBottom: 50, // Adjust paddingBottom for the footer
-    alignSelf: "center",
+    paddingLeft: 50,
   },
   headerContainer: {
     flexDirection: "row",
@@ -87,18 +98,19 @@ const styles = StyleSheet.create({
   settingItem: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 40,
+    marginBottom: 30,
     fontFamily: "challenger-font",
   },
   settingBack: {
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 40,
+    fontSize: 18,
     fontFamily: "challenger-font",
     alignSelf: "baseline",
   },
   settingLabel: {
-    fontSize: 20,
+    fontSize: 18,
     marginRight: 10,
     fontFamily: "challenger-font",
   },

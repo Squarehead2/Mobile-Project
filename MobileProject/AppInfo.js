@@ -25,6 +25,7 @@ const AppInfo = () => {
             name="arrowleft"
             size={24}
             color="black"
+            marginLeft={10}
             style={styles.settingBack}
             onPress={() => navigation.goBack()}
           />
@@ -55,9 +56,10 @@ const styles = StyleSheet.create({
       paddingTop: 50, // Adjust paddingTop for the header
     },
     header: {
-      fontSize: 35, // Reduce the font size
+      fontSize: 36, // Reduce the font size
       fontFamily: "challenger-font",
       paddingBottom: 50, // Adjust paddingBottom for the footer
+      paddingLeft: 50,
       alignSelf: "center",
     },
     headerContainer: {
@@ -75,12 +77,14 @@ const styles = StyleSheet.create({
       flexDirection: "row",
       alignItems: "center",
       marginBottom: 40,
+      fontSize: 18,
       fontFamily: "challenger-font",
       alignSelf: "baseline",
     },
     settingLabel: {
-      fontSize: 20,
+      fontSize: 18,
       marginRight: 10,
+      marginBottom: 10,
       fontFamily: "challenger-font",
     },
     input: {
