@@ -15,8 +15,13 @@ import {
 } from "react-native";
 import { useFonts } from "expo-font";
 import * as Location from "expo-location";
+import { SimpleLineIcons } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
+import WeatherJokes from "./utils/WeatherJokes";
+import { useNavigation } from "@react-navigation/native";
 
 export default function MainPage() {
+  const navigation = useNavigation();
   const [forecast, setForecast] = useState(null);
   const [loading, setLoading] = useState(true);
   const [location, setLocation] = useState(null);
@@ -58,16 +63,18 @@ export default function MainPage() {
             throw new Error("Failed to fetch data");
           }
           const data = await response.json();
-    
-          const dataIcon = data.weather[0].icon; 
+
+          const dataIcon = data.weather[0].icon;
           const weatherIconUrl = `http://openweathermap.org/img/wn/${dataIcon}.png`;
-          
-          console.log(weatherIconUrl); 
-          
+
+          console.log(weatherIconUrl);
+
           setForecast(data);
           setWeatherIcon(weatherIconUrl);
+          console.log(data.weather[0].description);
         } catch (error) {
-          Alert.alert("Error", error.message);O
+          Alert.alert("Error", error.message);
+          O;
         } finally {
           setLoading(false);
         }
@@ -99,16 +106,43 @@ export default function MainPage() {
         source={require("./assets/Clouds2.gif")}
         style={styles.cloudgif}
       />
+      <View style={styles.navbox}>
+        {/* <View style={styles.navFlex}> */}
+        <AntDesign
+          name="arrowleft"
+          style={styles.back}
+          size={24}
+          color="black"
+          onPress={() => navigation.goBack()}
+        />
+        <SimpleLineIcons
+          name="settings"
+          style={styles.settings}
+          size={24}
+          color="black"
+          onPress={() => navigation.navigate("Setting")}
+        />
+        {/* </View> */}
+        {/* <Image
+              source={require("./assets/cloudsshort.png")}
+              style={styles.navImage}
+            /> */}
+      </View>
       <ScrollView>
-        <Text style={styles.header} fontFamily='challenger-font' textAlign='center'>Today's Forecast</Text>
         <Text style={styles.location}>
           {forecast.name}, {forecast.sys.country}
         </Text>
-        
-        {weatherIcon && (
-          <Image source={{ uri: weatherIcon }} style={styles.dataIcon} />
-        )}
-      
+        <View style={styles.jokebox}>
+          {weatherIcon && (
+            <Image source={{ uri: weatherIcon }} style={styles.dataIcon} />
+          )}
+          <WeatherJokes
+            style={styles.jokes}
+            temp={forecast.main.temp}
+            weather_desc={forecast.weather[0].description}
+          />
+        </View>
+
         <Text style={styles.temp}>{forecast.main.temp}°C</Text>
         <Text style={styles.description}>
           {forecast.weather[0].description}
@@ -135,6 +169,7 @@ export default function MainPage() {
         <Text style={styles.timezone}>
           Timezone: {forecast.timezone / 3600} GMT
         </Text>
+
         <Text style={styles.date}>
           {new Date().toLocaleDateString("en-US", {
             weekday: "long",
@@ -143,14 +178,13 @@ export default function MainPage() {
             day: "numeric",
           })}
         </Text>
+
         <Text style={styles.time}>
           {new Date().toLocaleTimeString("en-US", {
             hour: "numeric",
             minute: "numeric",
           })}
-        </Text> 
-       
-      
+        </Text>
       </ScrollView>
     </SafeAreaView>
   );
@@ -162,19 +196,19 @@ const styles = StyleSheet.create({
     backgroundColor: "rgb(49, 158, 232)",
     alignItems: "center",
     justifyContent: "center",
-    fontFamily: "challenger-font"
+    fontFamily: "challenger-font",
   },
   container: {
     flex: 1,
     backgroundColor: "rgb(49, 158, 232)",
     alignItems: "center",
-    justifyContent: 'center',
-    fontFamily:"challenger-font"
+    justifyContent: "center",
+    fontFamily: "challenger-font",
   },
-  todaysForecast:{
-    textAlign:'center',
+  todaysForecast: {
+    textAlign: "center",
     fontSize: 18,
-    fontFamily: 'challenger-font'
+    fontFamily: "challenger-font",
   },
   location: {
     fontSize: 18,
@@ -284,14 +318,55 @@ const styles = StyleSheet.create({
     fontFamily: "challenger-font",
     fontSize: 16,
   },
-  dataIcon:{
+  dataIcon: {
     width: 70,
-    height: 70, 
+    left: 35,
+    height: 70,
     marginTop: 20,
     marginBottom: 30,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  jokes: {
+    padding: (top = 10),
+    fontSize: 20,
+    left: 40,
+    fontFamily: "challenger-font",
+    textAlign: "center",
+  },
+  jokebox: {
+    flexDirection: "row",
+    alignItems: "center",
+    width: "80%",
+    justifyContent: "center",
+    borderBlockColor: "black",
+    borderBlockWidth: 5,
+  },
+  navbox: {
+    flex: 1,
+    flexDirection: "row",
+    width: "100%",
 
-
-  }
+    backgroundColor: "rgb(49, 158, 232)",
+    borderColor: "black",
+    borderWidth: 2,
+    alignItems: "center",
+    position: "relative",
+    justifyContent: "space-between",
+    alignSelf: "flex-start",
+  },
+  settings: {
+    top: 15,
+    paddingRight: 25,
+    fontFamily: "challenger-font",
+    position: "relative",
+    alignSelf: "baseline",
+  },
+  back: {
+    top: 17,
+    paddingLeft: 20,
+    fontFamily: "challenger-font",
+    position: "relative",
+    alignSelf: "baseline",
+  },
 });

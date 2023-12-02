@@ -6,9 +6,9 @@ import * as React from "react";
 
 import { useEffect, useState } from "react";
 // ... other imports ...
-const MorningJokes = require("../assets/MorningJokes.json");
-const AfternoonJokes = require("../assets/AfterNoonJokes.json");
-const NightJokes = require("../assets/NightJokes.json");
+const MorningJokes = require("../assets/homepagejokes/MorningJokes.json");
+const AfternoonJokes = require("../assets/homepagejokes/AfterNoonJokes.json");
+const NightJokes = require("../assets/homepagejokes/NightJokes.json");
 // Assuming other components and imports are here
 
 export default function TimeOfDay() {
