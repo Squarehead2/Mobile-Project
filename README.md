@@ -1,10 +1,10 @@
-Whimsical Weather App
+# Whimsical Weather App
 
-🌤 Overview
+**🌤 Overview**
 
 Whimsical Weather App is a fun and quirky mobile application that delivers weather forecasts with a humorous twist! Using the OpenWeather API, this app provides real-time weather data alongside witty and entertaining commentary, making checking the weather an enjoyable experience.
 
-🎉 Features
+**🎉 Features**
 
 Real-Time Weather Data: Get up-to-date weather information for any location.
 
@@ -14,7 +14,7 @@ Custom Themes: Choose from various fun themes to match your mood.
 
 Location-Based Updates: Automatically fetch weather based on your GPS location.
 
-🛠 Technologies Used
+**🛠 Technologies Used**
 
 Frontend: React Native / Expo
 
@@ -24,7 +24,7 @@ UI Components: Styled Components / React Native Paper
 
 Networking: Axios / Fetch API
 
-🔑 API Key Setup
+**🔑 API Key Setup**
 
 To run this project, you need an OpenWeather API key.
 
@@ -34,7 +34,7 @@ Create a .env file in the root directory and add:
 
 OPENWEATHER_API_KEY=your_api_key_here
 
-📱 Usage
+**📱 Usage**
 
 Open the app and grant location permissions.
 
@@ -44,7 +44,7 @@ Switch between themes and forecast styles.
 
 Share your favorite forecasts with friends!
 
-🌟 Future Enhancements
+**🌟 Future Enhancements**
 
 Voice Narration for Forecasts
 
